@@ -109,7 +109,7 @@ async function createGroupByTab(tab, groupName) {
 	await chrome.tabGroups.update(groupId, { 
 		title: groupName 
 	});
-	console.log(`Group ${groupId} created with title ${group_title}`);
+	console.log(`Group ${groupId} created with title ${groupName}`);
 }
 
 function toggleGroup(group, collapsed) {
