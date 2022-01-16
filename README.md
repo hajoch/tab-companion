@@ -1,21 +1,16 @@
-# <img src="public/icons/icon_48.png" width="45" align="left"> Tab Grouper
+# <img src="public/icons/favicon-96x96.png" width="45" align="left"> Tab Companion
 
-My Chrome Extension
+## Chrome extension - Tab Companion
+This extension will help you stay organized when browsing the web. It provides simple keyboard shortcuts and automation for working with Tab Groups.
 
-## Features
+### Features
 
-- Feature 1
-- Feature 2
+...
 
-## Install
+### Install
 
-[**Chrome** extension]()
+...
 
-## Contribution
+### Contribution
 
-Suggestions and pull requests are welcomed!.
-
----
-
-This project was bootstrapped with [Chrome Extension CLI](https://github.com/dutiyesh/chrome-extension-cli)
-
+...

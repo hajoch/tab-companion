@@ -1,36 +1,65 @@
 {
-  "manifest_version": 2,
-  "name": "Tab Grouper",
-  "version": "0.1.0",
-  "description": "My Chrome Extension",
+  "manifest_version": 3,
+  "name": "🔥🚀 Tab Companion",
+  "version": "1.0.0",
+  "description": "This extension will help you stay organized when browsing the web. It provides simple keyboard shortcuts and automation for working with Tab Groups.",
   "icons": {
-    "16": "icons/icon_16.png",
-    "32": "icons/icon_32.png",
-    "48": "icons/icon_48.png",
-    "128": "icons/icon_128.png"
-  },
+    "16": "icons/favicon-16x16.png",
+    "32": "icons/favicon-32x32.png",
+    "96": "icons/favicon-96x96.png",
+    "192": "icons/favicon-192x192.png"
+},
   "background": {
-    "scripts": [
-      "background.js"
-    ],
-    "persistent": false
+    "service_worker": "background.js"
   },
-  "browser_action": {
-    "default_title": "Tab Grouper",
-    "default_popup": "popup.html"
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/favicon-16x16.png",
+      "32": "icons/favicon-32x32.png",
+      "96": "icons/favicon-96x96.png",
+      "192": "icons/favicon-192x192.png"
+      }
   },
   "permissions": [
-    "storage"
+    "tabGroups",
+    "tabs",
+    "storage",
+    "activeTab"
   ],
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
-      "run_at": "document_idle",
-      "js": [
-        "contentScript.js"
-      ]
+      "matches": ["<all_urls>"],
+      "match_about_blank": true,
+      "js": ["contentScript.js"],
+      "run_at": "document_start",
+      "all_frames": true
     }
-  ]
+  ],
+  "commands": {
+    "create-group": {
+      "suggested_key": {
+        "default": "Alt+G"
+      },
+      "description": "Create Tab Group"
+    },
+    "create-tab": {
+      "suggested_key": {
+        "default": "Alt+T"
+      },
+      "description": "Add new Tab to current Group"
+    },
+    "toggle-all-groups": {
+      "suggested_key": {
+        "default": "Alt+C"
+      },
+      "description": "Collapse/Expand all Tab Groups"
+    },
+    "close-group": {
+      "suggested_key": {
+        "default": "Alt+W"
+      },
+      "description": "Close Tab Group"
+    }
+  }
 }

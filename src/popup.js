@@ -3,110 +3,33 @@
 import './popup.css';
 
 (function() {
-  // We will make use of Storage API to get and store `count` value
-  // More information on Storage API can we found at
-  // https://developer.chrome.com/extensions/storage
+  
+  const options = {};
+  // TODO - Investigate how to improve performance
 
-  // To get storage access, we have to mention it in `permissions` property of manifest.json file
-  // More information on Permissions can we found at
-  // https://developer.chrome.com/extensions/declare_permissions
-  const counterStorage = {
-    get: cb => {
-      chrome.storage.sync.get(['count'], result => {
-        cb(result.count);
-      });
-    },
-    set: (value, cb) => {
-      chrome.storage.sync.set(
-        {
-          count: value,
-        },
-        () => {
-          cb();
-        }
-      );
-    },
-  };
+  // Sync settings with storage
+  chrome.storage.sync.get('options', (data) => {
+    Object.assign(options, data.options);
+    // Update UI form
+    optionsForm.autoCollapse.checked = Boolean(options.autoCollapse);
+    optionsForm.autoName.checked = Boolean(options.autoName);
+  });
 
-  function setupCounter(initialValue = 0) {
-    document.getElementById('counter').innerHTML = initialValue;
+  // Listen for form changes
+  optionsForm.autoCollapse.addEventListener('change', (event) => {
+    options.autoCollapse = event.target.checked;
+    chrome.storage.sync.set({options});
+  });
+  optionsForm.autoName.addEventListener('change', (event) => {
+    options.autoName = event.target.checked;
+    chrome.storage.sync.set({options});
+  });
 
-    document.getElementById('incrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'INCREMENT',
+  chrome.commands.getAll( (commands) => {
+      // Create an unordered list
+      commands.forEach((command) => {
+        let element = document.querySelector('#'+command.name);
+        element.innerHTML = command.shortcut;
       });
     });
-
-    document.getElementById('decrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'DECREMENT',
-      });
-    });
-  }
-
-  function updateCounter({ type }) {
-    counterStorage.get(count => {
-      let newCount;
-
-      if (type === 'INCREMENT') {
-        newCount = count + 1;
-      } else if (type === 'DECREMENT') {
-        newCount = count - 1;
-      } else {
-        newCount = count;
-      }
-
-      counterStorage.set(newCount, () => {
-        document.getElementById('counter').innerHTML = newCount;
-
-        // Communicate with content script of
-        // active tab by sending a message
-        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-          const tab = tabs[0];
-
-          chrome.tabs.sendMessage(
-            tab.id,
-            {
-              type: 'COUNT',
-              payload: {
-                count: newCount,
-              },
-            },
-            response => {
-              console.log('Current count value passed to contentScript file');
-            }
-          );
-        });
-      });
-    });
-  }
-
-  function restoreCounter() {
-    // Restore count value
-    counterStorage.get(count => {
-      if (typeof count === 'undefined') {
-        // Set counter value as 0
-        counterStorage.set(0, () => {
-          setupCounter(0);
-        });
-      } else {
-        setupCounter(count);
-      }
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', restoreCounter);
-
-  // Communicate with background file by sending a message
-  chrome.runtime.sendMessage(
-    {
-      type: 'GREETINGS',
-      payload: {
-        message: 'Hello, my name is Pop. I am from Popup.',
-      },
-    },
-    response => {
-      console.log(response.message);
-    }
-  );
 })();

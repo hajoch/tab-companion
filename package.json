@@ -1,7 +1,7 @@
 {
-  "name": "tab-grouper",
-  "version": "0.1.0",
-  "description": "My Chrome Extension",
+  "name": "tab-companion",
+  "version": "1.0.0",
+  "description": "Tab Companion",
   "private": true,
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.config.js",

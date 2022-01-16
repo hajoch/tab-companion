@@ -8,7 +8,6 @@
 }
 /* normalize css ends here */
 
-
 html {
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
     color: #222;
@@ -16,7 +15,7 @@ html {
 
 body {
     width: 350px;
-    height: 300px;
+    height: 250px;
 }
 
 .app {
@@ -29,10 +28,73 @@ body {
     padding: 20px;
 }
 
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 16px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .1s;
+    transition: .1s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .1s;
+    transition: .1s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(18px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 16px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
 .title {
     font-size: 18px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .subtitle {
@@ -47,46 +109,17 @@ code {
     border-radius: 2px;
 }
 
-.counter-label {
-    font-size: 12px;
-    margin-bottom: 5px;
-}
-
-.counter {
-    font-size: 36px;
-    font-weight: 700;
-}
-
-.button-container {
-    margin-top: 15px;
-}
-
-.button {
-    border: 0;
-    display: inline-block;
-    padding: 10px 20px;
-    margin-right: 4px;
-    margin-left: 4px;
-    background-color: bisque;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: transform .2s ease;
-    user-select: none;
-}
-
-.button:focus {
-    outline: none;
-}
-
-.button:hover {
-    transform: scale(1.1);
-}
-
 .divider {
-    margin: 30px auto 25px;
+    margin: 20px auto 15px;
     width: 50px;
-    border: .5px dashed #000;
+    border: .5px dashed #222;
     opacity: .1;
+}
+
+.switch-text {
+    margin-left: 5px;
+}
+
+form > p {
+  margin-bottom: 10px;
 }
