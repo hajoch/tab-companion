@@ -1,25 +1,25 @@
 {
   "manifest_version": 3,
-  "name": "🔥🚀 Tab Companion",
+  "name": "Tab Companion",
   "version": "1.0.0",
   "description": "This extension will help you stay organized when browsing the web. It provides simple keyboard shortcuts and automation for working with Tab Groups.",
   "icons": {
-    "16": "icons/favicon-16x16.png",
-    "32": "icons/favicon-32x32.png",
-    "96": "icons/favicon-96x96.png",
-    "192": "icons/favicon-192x192.png"
-},
+    "16": "icons/icon16.png",
+    "48": "icons/icon32.png",
+    "128": "icons/icon96.png",
+    "256": "icons/icon256.png"
+  },
   "background": {
     "service_worker": "background.js"
   },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "icons/favicon-16x16.png",
-      "32": "icons/favicon-32x32.png",
-      "96": "icons/favicon-96x96.png",
-      "192": "icons/favicon-192x192.png"
-      }
+      "16": "icons/icon16.png",
+      "48": "icons/icon32.png",
+      "128": "icons/icon96.png",
+      "256": "icons/icon256.png"
+    }
   },
   "permissions": [
     "tabGroups",
