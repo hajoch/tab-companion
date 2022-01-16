@@ -3,7 +3,6 @@
 // https://developer.chrome.com/extensions/background_pages
 
 var collapsed_state = false;
-var options = getOptions();
 
 //--------------------------
 //  EVENT LISTENERS
@@ -69,6 +68,7 @@ async function createGroup() {
 	//GET CURRENT TAB INFO
 	let [tab] = await getCurrentTab();
 	// PROMPT USER FOR TITLE
+	let options = getOptions();
 	if(options.autoName) {
 		createGroupByTab(tab);
 	} else {
@@ -117,6 +117,7 @@ function toggleGroup(group, collapsed) {
 }
 
 function autoCollapse() {
+	let options = getOptions();
 	if(options.autoCollapse) {
 		collapsed_state = false
 		toggleAllGroups();
