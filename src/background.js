@@ -15,7 +15,7 @@ chrome.tabGroups.onCreated.addListener( (group) => {
 chrome.storage.onChanged.addListener((changes, area) => {
 	let newValue = (changes.options || {}).newValue;
 	if(area === 'sync' && newValue) {
-		options = newValue;
+		// options = newValue;
 		//Do updates based on settings
 		autoCollapse();
 	}
@@ -68,7 +68,7 @@ async function createGroup() {
 	//GET CURRENT TAB INFO
 	let [tab] = await getCurrentTab();
 	// PROMPT USER FOR TITLE
-	let options = getOptions();
+	let options = await getOptions();
 	if(options.autoName) {
 		createGroupByTab(tab);
 	} else {
@@ -80,7 +80,7 @@ async function createGroup() {
 				message: suggestTitle(tab)
 			}
 		}, (response) => { 
-			createGroupByTab(tab, response.message);
+			createGroupByTab(tab, (response || {}).message);
 		});
 	}
 }
@@ -102,7 +102,6 @@ async function createTab() {
 
 async function createGroupByTab(tab, groupName) {
 	groupName = groupName || suggestTitle(tab);
-	console.log(groupName);
 	//GREATE GROUP
 	let groupId = await chrome.tabs.group({ tabIds: tab.id });
 	//NAME GROUP
@@ -116,10 +115,10 @@ function toggleGroup(group, collapsed) {
 	chrome.tabGroups.update(group.id, {collapsed: collapsed });
 }
 
-function autoCollapse() {
-	let options = getOptions();
+async function autoCollapse() {
+	let options = await getOptions();
 	if(options.autoCollapse) {
-		collapsed_state = false
+		collapsed_state = false;
 		toggleAllGroups();
 	}
 }

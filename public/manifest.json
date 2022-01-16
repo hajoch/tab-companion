@@ -5,8 +5,8 @@
   "description": "This extension will help you stay organized when browsing the web. It provides simple keyboard shortcuts and automation for working with Tab Groups.",
   "icons": {
     "16": "icons/icon16.png",
-    "48": "icons/icon32.png",
-    "128": "icons/icon96.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png",
     "256": "icons/icon256.png"
   },
   "background": {
@@ -16,8 +16,8 @@
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
-      "48": "icons/icon32.png",
-      "128": "icons/icon96.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png",
       "256": "icons/icon256.png"
     }
   },
