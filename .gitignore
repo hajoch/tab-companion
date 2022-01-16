@@ -8,3 +8,7 @@
 .DS_Store
 
 npm-debug.log*
+
+# Private keys
+build.crx
+build.pem
