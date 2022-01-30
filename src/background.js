@@ -8,19 +8,6 @@ var collapsed_state = false;
 //  EVENT LISTENERS
 //--------------------------
 
-chrome.tabGroups.onCreated.addListener( (group) => {
-	autoCollapse();
-});
-
-chrome.storage.onChanged.addListener((changes, area) => {
-	let newValue = (changes.options || {}).newValue;
-	if(area === 'sync' && newValue) {
-		// options = newValue;
-		//Do updates based on settings
-		autoCollapse();
-	}
-});
-
 chrome.commands.onCommand.addListener( (command) => {
 	switch(command) {
 		case 'create-group':
@@ -69,9 +56,7 @@ async function createGroup() {
 	let [tab] = await getCurrentTab();
 	// PROMPT USER FOR TITLE
 	let options = await getOptions();
-	if(options.autoName) {
-		createGroupByTab(tab);
-	} else {
+	if(options.promptName) {
 		//For some reason the promise doesn't work.... 😒
 		//TODO - Investigate
 		chrome.tabs.sendMessage(tab.id, {
@@ -82,6 +67,8 @@ async function createGroup() {
 		}, (response) => { 
 			createGroupByTab(tab, (response || {}).message);
 		});
+	} else {
+		createGroupByTab(tab);
 	}
 }
 
@@ -115,14 +102,6 @@ function toggleGroup(group, collapsed) {
 	chrome.tabGroups.update(group.id, {collapsed: collapsed });
 }
 
-async function autoCollapse() {
-	let options = await getOptions();
-	if(options.autoCollapse) {
-		collapsed_state = false;
-		toggleAllGroups();
-	}
-}
-
 // TODO - Should probably rename to "Settings"
 // TODO - There's also a possiblity of the options not being in sync initially.. Simple fix
 function getOptions() {
@@ -138,3 +117,27 @@ function suggestTitle(tab) {
 	const tab_title = tab.title || 'New Group';
 	return tab_title.substring(0, tab_title.length > 36 ? 36: tab_title.length);
 }
+
+
+/*
+chrome.tabGroups.onCreated.addListener( (group) => {
+	autoCollapse();
+});
+
+chrome.storage.onChanged.addListener((changes, area) => {
+	let newValue = (changes.options || {}).newValue;
+	if(area === 'sync' && newValue) {
+		// options = newValue;
+		//Do updates based on settings
+		autoCollapse(newValue);
+	}
+});
+
+async function autoCollapse(options) {
+	if(!options) options = await getOptions();
+	if(options.autoCollapse) {
+		collapsed_state = false;
+		toggleAllGroups();
+	}
+}
+*/
